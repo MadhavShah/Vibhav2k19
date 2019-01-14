@@ -149,9 +149,7 @@ public class Splash extends AppCompatActivity implements View.OnClickListener, G
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(Splash.this, MainActivity.class);
-                Splash.this.startActivity(mainIntent);
-                Splash.this.finish();
+                userLogin();
             }
         }, SPLASH_DISPLAY_LENGTH);
     }
@@ -251,7 +249,7 @@ public class Splash extends AppCompatActivity implements View.OnClickListener, G
 //            extras.putString("Name", name);
 //            extras.putString("Email", email);
             Toast toast1 = Toast.makeText(this, "User login called ", Toast.LENGTH_LONG);
-            toast1.show();
+            //toast1.show();
             userLogin();
 
             // 4. add bundle to intent
@@ -320,7 +318,7 @@ public class Splash extends AppCompatActivity implements View.OnClickListener, G
         final TextView adm_no_input= (TextView)view.findViewById(R.id.adm_no);
         final TextView phone_input= (TextView)view.findViewById(R.id.mobile);
         final TextView branch_input= (TextView)view.findViewById(R.id.branch);
-        builder.setView(view)
+        builder.setView(view).setCancelable(false)
                 // Add action buttons
                 .setPositiveButton("Sign in", new DialogInterface.OnClickListener() {
                     @Override
@@ -330,7 +328,7 @@ public class Splash extends AppCompatActivity implements View.OnClickListener, G
                         mobile= phone_input.getText().toString().trim();
                         branch= branch_input.getText().toString().trim();
                         registerUser();
-                        activityChange(intent);
+                        //activityChange(intent);
                     }
                 });
                 builder.show();
@@ -411,7 +409,7 @@ public class Splash extends AppCompatActivity implements View.OnClickListener, G
 
                     //if no error in response
                     if (obj.getString("error").equals("false")) {
-                        Toast.makeText(getApplicationContext(), "Object  "+obj.getString("message"), Toast.LENGTH_LONG).show();
+                        ///Toast.makeText(getApplicationContext(), "Object  "+obj.getString("message"), Toast.LENGTH_LONG).show();
 
                         User user = new User(
                                 name,
@@ -423,12 +421,11 @@ public class Splash extends AppCompatActivity implements View.OnClickListener, G
                                 500
                         );
                         SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-                   Log.d("vvvvvvvvvvv", "onPostExecute: "+(obj.getString("token")));
+                   Log.d("vvvvvvvvvvv", "onPostExecute: "+obj.toString());
                         SharedPrefManager.getInstance(getApplicationContext()).tokenSave(obj.getString("token"));
                         Toast.makeText(getApplicationContext(), "User Registered", Toast.LENGTH_LONG).show();
                         //starting the profile activity
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        userLogin();
                     } else {
                         Toast.makeText(getApplicationContext(), "User Already register", Toast.LENGTH_SHORT).show();
                     }
@@ -485,7 +482,7 @@ public class Splash extends AppCompatActivity implements View.OnClickListener, G
 
 
                     //if no error in response
-                    //Log.d("login", "onstExecute: "+ obj.getString("user_tokens"));
+                   // Log.d("login", "onstExecute: "+ obj.getString("user_tokens"));
                     //obj.getString("user_tokens");
 
                     if (!obj.getString("token").equals("null")) {
@@ -528,7 +525,7 @@ public class Splash extends AppCompatActivity implements View.OnClickListener, G
                         mProgress.setVisibility(View.INVISIBLE);
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     } else {
-                        Toast.makeText(getApplicationContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();
                         dialog();
                     }
                 } catch (JSONException e) {

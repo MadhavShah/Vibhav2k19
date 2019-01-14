@@ -102,8 +102,8 @@ public class PersonProfile extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        SharedPrefManager.getInstance(getApplicationContext()).logout();
                         startActivity(new Intent(PersonProfile.this,Splash.class));
-
                     }
                 });
         this.finish();

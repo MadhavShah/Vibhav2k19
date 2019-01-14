@@ -17,6 +17,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -89,11 +90,10 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         String profpic=SharedPrefManager.getInstance(getApplicationContext()).getKeyPic();
         View hview=navigationView.getHeaderView(0);
+        Log.d("prof", "onCreate: "+profpic);
         ImageView prof=hview.findViewById(R.id.imageView);
-        Glide.with(this)
-                .load(profpic)
-//                .DiskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(prof);
+        if(profpic!=null)
+        {Glide.with(this).load(profpic).into(prof);}
         SharedPreferences mPreferences= getSharedPreferences("tempDatabase",Context.MODE_PRIVATE);
 //        //Toast toast = Toast.makeText(this, mPreferences.getString("name","name")
 //                        +mPreferences.getString("email","email")+
@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         startActivity(new Intent(MainActivity.this,Splash.class));
-
+                        SharedPrefManager.getInstance(getApplicationContext()).logout();
                     }
                 });
         this.finish();
