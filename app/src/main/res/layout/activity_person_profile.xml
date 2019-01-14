@@ -239,6 +239,7 @@
                 android:layout_gravity="center"
                 android:orientation="horizontal"
                 android:paddingTop="15dp"
+                android:onClick="signout"
                 android:background="#FFFFFF"
                 android:layout_marginTop="5dp"
                 android:paddingBottom="15dp">

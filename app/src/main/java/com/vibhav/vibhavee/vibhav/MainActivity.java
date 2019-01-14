@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity
                 mDetector.onTouchEvent(motionEvent);
                 return true;
             }
+
         });
 
 

@@ -14,7 +14,7 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-public class CircularImageView extends ImageView {
+public class CircularImageView extends android.support.v7.widget.AppCompatImageView {
 
     public CircularImageView(Context context) {
         super(context);

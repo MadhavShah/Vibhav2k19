@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 public class PersonProfile extends AppCompatActivity {
     private   AlertDialog.Builder Dialog1, Dialog2;
@@ -30,6 +36,8 @@ public class PersonProfile extends AppCompatActivity {
     "cs_go",
     "treasure_hunt"};
     User user;
+    private GoogleSignInClient mGoogleSignInClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +57,11 @@ public class PersonProfile extends AppCompatActivity {
         email.setText(user.getEmail());
         if(pic!=null){
         Glide.with(this).load(pic).into(Prof_pic);}
+        GoogleSignInOptions signInOptions= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestProfile()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, signInOptions);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -72,7 +85,7 @@ public class PersonProfile extends AppCompatActivity {
         Dialog1= new AlertDialog.Builder(this);
         String message = "";
         for(int i=0;i<13;i++){
-            if(!SharedPrefManager.getInstance(getApplicationContext()).getEventToken(events[i]).equals("1")){
+            if(SharedPrefManager.getInstance(getApplicationContext()).getEventToken(events[i]).equals("1")){
 //                message.concat(events[i]+"\n");
                 message=message+events[i]+"\n";
             }
@@ -82,6 +95,18 @@ public class PersonProfile extends AppCompatActivity {
         AlertDialog alert_about = Dialog1.create();
         alert_about.setTitle("Bucks Info");
         alert_about.show();
+
+    }
+    public void signout(View view){
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        startActivity(new Intent(PersonProfile.this,Splash.class));
+
+                    }
+                });
+        this.finish();
 
     }
 
