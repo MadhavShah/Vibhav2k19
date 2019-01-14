@@ -100,7 +100,7 @@ public class Splash extends AppCompatActivity implements View.OnClickListener, G
                 img_url = signInAccount.getPhotoUrl() != null ? signInAccount.getPhotoUrl().toString() : null;
             //    Toast toast = Toast.makeText(this, name + "  " + id + "  " + img_url + "  " + email + "  " + idauth + "   " + signInAccount.getEmail(), Toast.LENGTH_LONG);
               //  toast.show();
-                if (InternetConnection.checkConnection(getApplicationContext())==false) {
+                if (!InternetConnection.checkConnection(getApplicationContext())) {
                     Toast.makeText(this,"Turn On Internet",Toast.LENGTH_LONG).show();
                     splash();
                 }
@@ -117,8 +117,15 @@ public class Splash extends AppCompatActivity implements View.OnClickListener, G
                         try {
                             ///hideProgressIndicator();
                             GoogleSignInAccount signInAccount = task.getResult(ApiException.class);
+                            if (!InternetConnection.checkConnection(getApplicationContext())) {
+                                Toast.makeText(getApplicationContext(),"Turn On Internet",Toast.LENGTH_LONG).show();
+                                splash();
+                            }
+                            else {
+                                userLogin();
+                            }
                             updateUI(true);
-                            splash();
+
                             //dialog();
                         } catch (ApiException apiException) {
                             // You can get from apiException.getStatusCode() the detailed error code
@@ -149,7 +156,8 @@ public class Splash extends AppCompatActivity implements View.OnClickListener, G
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                userLogin();
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
     }

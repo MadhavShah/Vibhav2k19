@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,13 +23,15 @@ public class madhavBhai extends AppCompatActivity implements View.OnClickListene
     EditText team_name_field, adm_field,coupon;
     CheckBox check;
     String team_name, admission, event,token;
-    TextView note;
+    TextView note,single;
+    boolean singl=false;
     Button submit;
     private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_madhav_bhai);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -44,19 +47,30 @@ public class madhavBhai extends AppCompatActivity implements View.OnClickListene
         submit= (Button)findViewById(R.id.submit);
         check= (CheckBox) findViewById(R.id.checkbox_meat);
         note=(TextView)findViewById(R.id.note);
+        single=findViewById(R.id.single);
+        event=this.getIntent().getStringExtra("event");
         submit.setOnClickListener(this);
-        updateUI(token.equals("0"));
+        singl=(event.equals("placement_fever")||event.equals("buffet_money")||event.equals("marketing_roadies"))&&token.equals("0");
+        if(singl){
+            findViewById(R.id.register).setVisibility(View.GONE);
+            findViewById(R.id.bucks).setVisibility(View.GONE);
+            note.setVisibility(View.GONE);
+            single.setVisibility(View.VISIBLE);
+        }else {
+            updateUI(token.equals("0"));
+        }
     }
     public void updateUI(boolean x){
         if(!x){
             findViewById(R.id.register).setVisibility(View.GONE);
             findViewById(R.id.bucks).setVisibility(View.VISIBLE);
-            note.setVisibility(View.GONE);
+            note.setVisibility(View.INVISIBLE);
         }
         else {
             findViewById(R.id.register).setVisibility(View.VISIBLE);
             findViewById(R.id.bucks).setVisibility(View.GONE);
         }
+
     }
 
     public void onCheckboxClicked(View view) {
@@ -85,7 +99,7 @@ public class madhavBhai extends AppCompatActivity implements View.OnClickListene
         {
             case R.id.submit:
                 if(token.equals("0"))
-                registerEvent();
+                    registerEvent();
                 else
                     verify_token();
                 break;
@@ -101,8 +115,11 @@ public class madhavBhai extends AppCompatActivity implements View.OnClickListene
 
         admission=adm_field.getText().toString().trim();
         submit.setClickable(false);
-        team_name=team_name_field.getText().toString().trim();
-        event=this.getIntent().getStringExtra("event");
+        if(!singl){
+        team_name=team_name_field.getText().toString().trim();}
+        else {
+            team_name="none";
+        }
         if(admission.equals("")){
             admission="none";
         }

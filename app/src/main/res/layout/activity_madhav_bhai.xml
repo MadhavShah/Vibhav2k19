@@ -5,8 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:scrollbars="vertical"
     android:layout_centerVertical="true"
     >
+
     <Button
         android:id="@+id/close"
         android:layout_width="50dp"
@@ -46,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:padding="10dp"
+            android:padding="8dp"
 
             android:ems="10"
             android:background="@drawable/shape"
@@ -73,7 +75,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="32dp"
             android:background="@drawable/shape"
-            android:padding="5dp"
+            android:padding="8dp"
 
             android:ems="10"
             android:inputType="textPersonName"
@@ -112,6 +114,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+    <TextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/single"
+        android:layout_below="@id/imageView2"
+        android:layout_margin="10dp"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:text="\n\nDo you want to register in this event?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -124,7 +137,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-android:layout_alignParentBottom="true"
+        android:layout_alignParentBottom="true"
         android:id="@+id/submit"
         android:background="#4cc6d0"
         android:text="SUBMIT"

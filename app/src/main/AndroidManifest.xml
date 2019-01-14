@@ -258,7 +258,7 @@
             />
         <activity android:name=".madhavBhai"
             android:label="Registration Form"
-            android:theme="@style/Theme.AppCompat.Dialog"
+            android:theme="@style/CustomDialogTheme"
             android:excludeFromRecents="true"
             ></activity>
     </application>

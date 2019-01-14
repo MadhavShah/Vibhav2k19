@@ -79,13 +79,8 @@ public class Online extends AppCompatActivity {
         }
         intent.putExtra("event", event);
         intent.putExtra("token", bucks_token);
-        if(!bucks_token.equals("0") && !bucks_token.equals("1")) {
-            startActivity(intent);
-            finish();
-        }
-        else if(!bucks_token.equals("1")){
-            registerEvent();
-        }
+        startActivity(intent);
+        finish();
 
     }
     private void registerEvent() {
